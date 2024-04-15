@@ -79,14 +79,24 @@ window.onload = function(){
     }
 
 
-    //report the mouse position on click
+    //report the mouse position on move
     window.addEventListener("mousemove", function (evt) {
         let mousePos = getMousePos(canvas, evt);
         cursor_x = mousePos.x;
         cursor_y = mousePos.y;
         
     }, false);
-    
+
+    //add node on mouseclick
+    window.addEventListener("mousedown", function (evt) {
+        let mousePos = getMousePos(canvas, evt);
+        cursor_x = mousePos.x;
+        cursor_y = mousePos.y;
+        number_of_nodes++;
+        nodes.push(new Node(cursor_x, cursor_y, getRandomDirection()));
+        console.log("click")
+        console.log(number_of_nodes);
+    }, false);
 
     document.addEventListener("resize", render, true);
 
@@ -99,6 +109,9 @@ window.onload = function(){
         };
     }
 
+    function getRandomDirection() {
+        return Math.random() * 2 * Math.PI;
+    }
 
     //draw
     let ctx = canvas.getContext("2d");
@@ -114,7 +127,7 @@ window.onload = function(){
     let distance_to_cursor;
     for(let i = 0;i<number_of_nodes;i++){
         //nodes.push(new Node(0.5*canvas.width, 0.5*canvas.height, i*2 * Math.PI*(1/number_of_nodes)));
-        nodes.push(new Node(Math.random()*canvas.width, Math.random()*canvas.height, Math.random()*2 * Math.PI));
+        nodes.push(new Node(Math.random()*canvas.width, Math.random()*canvas.height, getRandomDirection()));
     } 
     
     function draw(){
@@ -129,7 +142,11 @@ window.onload = function(){
                 node.direction = node.direction + (Math.random()* max_turn * Math.PI)*sign;
                 modifier = 1;
             }else{
-                node.direction = Math.atan2((node.y - cursor_y), (node.x - cursor_x));
+                if((node.y === cursor_y) && (node.x === cursor_x)){
+                    node.direction = getRandomDirection();
+                }else{
+                    node.direction = Math.atan2((node.y - cursor_y), (node.x - cursor_x));
+                }
                 modifier = 2;
             }
 
