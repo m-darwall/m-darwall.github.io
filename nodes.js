@@ -120,6 +120,7 @@ window.onload = function(){
     function draw(){
         
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let lines = [];
         for(let n = 0;n<number_of_nodes;n++){
             node = nodes[n];
             distance_to_cursor = Math.sqrt((node.x - cursor_x)**2 + (node.y - cursor_y)**2);
@@ -164,12 +165,15 @@ window.onload = function(){
             }
             for(let c=0;c<connections;c++){
                 other_node = distances[c][0];
-                ctx.beginPath();
-                ctx.moveTo(node.x, node.y);
-                ctx.lineTo(other_node.x, other_node.y);
-                ctx.stroke();
+                lines.push([[node.x,node.y],[other_node.x, other_node.y]])
             }
         }
+        ctx.beginPath()
+        for (let line=0;line<lines.length;line++){
+            ctx.moveTo(lines[line][0][0], lines[line][0][1]);
+            ctx.lineTo(lines[line][1][0], lines[line][1][1]);
+        }
+        ctx.stroke();
 
         window.requestAnimationFrame(draw);
 
