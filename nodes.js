@@ -13,8 +13,8 @@ window.onload = function(){
             canvas.height
         );
 
-        canvas.width = dimensions.width;
-        canvas.height = dimensions.height;
+        canvas.width = dimensions.width*0.98;
+        canvas.height = dimensions.height*0.98;
     }
 
     function getObjectFitSize(
