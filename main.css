@@ -31,3 +31,49 @@ p{
     color: white;
     margin-top: 100vh;
 }
+.help_text{
+    color: white;
+    position: fixed;
+}
+.help{
+    position: fixed;
+}
+
+.help .help_text {
+    visibility: hidden;
+    width: 300px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 4vh;
+    left: 4vw;
+    margin-left: 1vw;
+    opacity: 0.8;
+}
+
+.help:hover .help_text {
+    visibility: visible;
+}
+
+#help-button{
+    height: 5vh;
+    width: 5vh;
+    background-color: #555;
+    border-radius: 50%;
+    position: fixed;
+    text-align: center;
+    font-size: 5vh;
+    padding: 2px;
+    line-height: 5vh;
+}
+
+@media only screen and (max-width:300px){
+    .help .help_text {
+        width:90vw;
+        top: 7vh;
+    }
+}
