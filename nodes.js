@@ -89,13 +89,15 @@ window.onload = function(){
 
     //add node on mouseclick
     window.addEventListener("mousedown", function (evt) {
-        let mousePos = getMousePos(canvas, evt);
-        cursor_x = mousePos.x;
-        cursor_y = mousePos.y;
-        number_of_nodes++;
-        nodes.push(new Node(cursor_x, cursor_y, getRandomDirection()));
-        console.log("click")
-        console.log(number_of_nodes);
+        if(number_of_nodes < 1000){
+            let mousePos = getMousePos(canvas, evt);
+            cursor_x = mousePos.x;
+            cursor_y = mousePos.y;
+            number_of_nodes++;
+            nodes.push(new Node(cursor_x, cursor_y, getRandomDirection()));
+            console.log("click")
+            console.log(number_of_nodes);
+        }
     }, false);
 
     document.addEventListener("resize", render, true);
@@ -116,7 +118,7 @@ window.onload = function(){
     //draw
     let ctx = canvas.getContext("2d");
     ctx.strokeStyle = "#34d8eb";
-    let number_of_nodes = 200;
+    let number_of_nodes = 990;
     let nodes = [];
     let speed = 0.8;
     let max_turn = 1/30;
