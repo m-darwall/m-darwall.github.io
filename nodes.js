@@ -118,7 +118,7 @@ window.onload = function(){
     //draw
     let ctx = canvas.getContext("2d");
     ctx.strokeStyle = "#34d8eb";
-    let number_of_nodes = 990;
+    let number_of_nodes = 200;
     let nodes = [];
     let speed = 0.8;
     let max_turn = 1/30;
