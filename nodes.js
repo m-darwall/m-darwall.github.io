@@ -2,7 +2,7 @@ window.onload = function(){
     let cursor_x = 0;
     let cursor_y = 0;
     //get canvas
-    let canvas = document.getElementById("mesh");
+    let canvas = document.getElementById("node-canvas");
     render();
     function render() {
         const dimensions = getObjectFitSize(
