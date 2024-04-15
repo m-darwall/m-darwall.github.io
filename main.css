@@ -9,6 +9,9 @@ body{
     height: 100%;
     text-align: center;
     align-items: center;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
 }
 
 h1{
