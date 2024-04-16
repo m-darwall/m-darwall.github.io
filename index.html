@@ -23,9 +23,19 @@
             <h1 data-language="Es">Bienvenido.</h1>
             <h1 data-language="Nb">Velkommen.</h1>
             <h1 data-language="Tp">Kama pona.</h1>
-
     	    <canvas id="node-canvas"></canvas>
             <script src="nodes.js"></script>
+            <div class="options" id="node-options">
+                <h2>Options</h2>
+                <label for="node-count" data-language="En">Number of Nodes</label>
+                <input type="range" min="2" max="1000" value="200" class="slider" id="node-count">
+                <label for="connection-count" data-language="En">Number of Connections</label>
+                <input type="range" min="1" max="20" value="7" class="slider" id="connection-count">
+                <label for="node-speed" data-language="En">Node Speed</label>
+                <input type="range" min="0" max="100" value="0.8" class="slider" id="node-speed">
+                <label for="node-path-straightness" data-language="En">Node Path Straightness</label>
+                <input type="range" min="0" max="1000" value="967" class="slider" id="node-path-straightness">
+            </div>
         </div>
         <div id="flocking" class="section">
             <p data-language="En">I hope you're well.</p>

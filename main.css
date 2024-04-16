@@ -94,6 +94,22 @@ p{
     scroll-snap-align: start;
 }
 
+.options{
+    background-color: white;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    z-index: 2;
+    border-color: white;
+    border-radius: 20px;
+    padding: 20px;
+    opacity: 90%;
+}
+
+h2{
+    margin-top: -10px;
+}
+
 @media only screen and (max-width:300px){
     .help .help_text {
         width:90vw;
