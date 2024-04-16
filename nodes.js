@@ -7,8 +7,10 @@ window.onload = function(){
     let canvas_width;
     let nodes = [];
     function render() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        // canvas.width = window.innerWidth;
+        // canvas.height = window.innerHeight;
+        canvas.width = document.documentElement.clientWidth;
+        canvas.height = document.documentElement.clientHeight;
         let width_change = canvas.width/canvas_width;
         let height_change = canvas.height/canvas_height;
         nodes.forEach(
