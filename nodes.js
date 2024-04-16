@@ -3,48 +3,43 @@ window.onload = function(){
     let cursor_y = 0;
     //get canvas
     let canvas = document.getElementById("node-canvas");
-    render();
+    let canvas_height;
+    let canvas_width;
+    let nodes = [];
     function render() {
-        const dimensions = getObjectFitSize(
-            true,
-            window.innerWidth,
-            window.innerHeight,
-            canvas.width,
-            canvas.height
-        );
-
-        canvas.width = dimensions.width*0.98;
-        canvas.height = dimensions.height*0.98;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let width_change = canvas.width/canvas_width;
+        let height_change = canvas.height/canvas_height;
+        nodes.forEach(
+            function (node){
+                node.x *= width_change;
+                node.y *= height_change;
+            });
+        canvas_width = canvas.width;
+        canvas_height = canvas.height;
     }
+    window.addEventListener("resize", function(){render();draw();}, true);
 
-    function getObjectFitSize(
-        contains,
-        containerWidth,
-        containerHeight,
-        width,
-        height
-    ) {
-        let doRatio = width / height;
-        let cRatio = containerWidth / containerHeight;
-        let targetWidth;
-        let targetHeight;
-        let test = contains ? doRatio > cRatio : doRatio < cRatio;
+    //report the mouse position on move
+    window.addEventListener("mousemove", function (evt) {
+        let mousePos = getMousePos(canvas, evt);
+        cursor_x = mousePos.x;
+        cursor_y = mousePos.y;
 
-        if (test) {
-            targetWidth = containerWidth;
-            targetHeight = targetWidth / doRatio;
-        } else {
-            targetHeight = containerHeight;
-            targetWidth = targetHeight * doRatio;
+    }, false);
+
+    //add node on mouseclick
+    window.addEventListener("mousedown", function (evt) {
+        if(number_of_nodes < 1000){
+            let mousePos = getMousePos(canvas, evt);
+            cursor_x = mousePos.x;
+            cursor_y = mousePos.y;
+            number_of_nodes++;
+            nodes.push(new Node(cursor_x, cursor_y, getRandomDirection()));
         }
+    }, false);
 
-        return {
-            width: targetWidth,
-            height: targetHeight,
-            x: (containerWidth - targetWidth) / 2,
-            y: (containerHeight - targetHeight) / 2
-        };
-    }
 
     class Node{
         constructor(x, y, direction) {
@@ -79,29 +74,6 @@ window.onload = function(){
     }
 
 
-    //report the mouse position on move
-    window.addEventListener("mousemove", function (evt) {
-        let mousePos = getMousePos(canvas, evt);
-        cursor_x = mousePos.x;
-        cursor_y = mousePos.y;
-        
-    }, false);
-
-    //add node on mouseclick
-    window.addEventListener("mousedown", function (evt) {
-        if(number_of_nodes < 1000){
-            let mousePos = getMousePos(canvas, evt);
-            cursor_x = mousePos.x;
-            cursor_y = mousePos.y;
-            number_of_nodes++;
-            nodes.push(new Node(cursor_x, cursor_y, getRandomDirection()));
-        }
-    }, false);
-
-
-    document.addEventListener("resize", render, true);
-
-
     //Get Mouse Position
     function getMousePos(canvas, evt) {
         let rect = canvas.getBoundingClientRect();
@@ -116,10 +88,10 @@ window.onload = function(){
     }
 
     //draw
+    render();
     let ctx = canvas.getContext("2d");
-    ctx.strokeStyle = "#34d8eb";
+    let colour = "#34d8eb";
     let number_of_nodes = 200;
-    let nodes = [];
     let speed = 0.8;
     let max_turn = 1/30;
     let reaction_proximity = 100;
@@ -133,7 +105,7 @@ window.onload = function(){
     } 
     
     function draw(){
-        
+        ctx.strokeStyle = colour;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         let lines = [];
         for(let n = 0;n<number_of_nodes;n++){
@@ -158,13 +130,14 @@ window.onload = function(){
             if(node.y > canvas.height || node.y < 0){
                 node.direction = 2*Math.PI - node.direction;
             }
+            console.log(modifier);
             node.x = node.x + (modifier*speed*Math.cos(node.direction));
             node.y = node.y + (modifier*speed*Math.sin(node.direction));
 
             //draw the nodes (unnecessary if showing connections)
-            ctx.beginPath();
-            ctx.arc(node.x, node.y, 1, 0, 2 * Math.PI);
-            ctx.stroke();
+            // ctx.beginPath();
+            // ctx.arc(node.x, node.y, 1, 0, 2 * Math.PI);
+            // ctx.stroke();
             let distances = [];
             let distance;
             let other_node;
@@ -187,6 +160,7 @@ window.onload = function(){
                 lines.push([[node.x,node.y],[other_node.x, other_node.y]])
             }
         }
+
         ctx.beginPath()
         for (let line=0;line<lines.length;line++){
             ctx.moveTo(lines[line][0][0], lines[line][0][1]);
