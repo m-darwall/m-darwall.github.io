@@ -1,0 +1,57 @@
+{
+  "En": {
+    "welcome": "Welcome!",
+    "node-options": "Options",
+    "node-num-label": "Number of Nodes",
+    "node-conn-label": "Number of Connections",
+    "node-speed-label": "Speed",
+    "node-path-label": "Path Straightness",
+    "page-2-message": "I hope you're well.",
+    "page-3-message": "This page is under construction.",
+    "page-4-message": "But I hope you enjoy it."
+  },
+  "Cy": {
+    "welcome": "Croeso!",
+    "node-options": "Opsiynau",
+    "node-num-label": "Nifer o Nodau",
+    "node-conn-label": "Nifer o Gysylltiadau",
+    "node-speed-label": "Cyflymder",
+    "node-path-label": "Uniondeb Llwybr",
+    "page-2-message": "Rwy'n gobeithio bod chi'n dda.",
+    "page-3-message": "Mae'r tudalen yma yn cael ei adeiladu.",
+    "page-4-message": "Ond rwy'n gobeithio eich fod chi'n mwynhau e."
+  },
+  "Es": {
+    "welcome": "Bienvenido!",
+    "node-options": "Ajustes",
+    "node-num-label": "Número de Nodos",
+    "node-conn-label": "Número de Conexiones",
+    "node-speed-label": "Velocidad",
+    "node-path-label": "Rectitud del Camino",
+    "page-2-message": "Espero que estés bien.",
+    "page-3-message": "Esta página esta en construccion.",
+    "page-4-message": "Pero espero que lo disfrutes."
+  },
+  "Nb": {
+    "welcome": "Velkommen!",
+    "node-options": "Innstillinger",
+    "node-num-label": "Antall Noder",
+    "node-conn-label": "Antall Tilkoblinger",
+    "node-speed-label": "Hastighet",
+    "node-path-label": "Sti Retthet",
+    "page-2-message": "Jeg håper du har det bra",
+    "page-3-message": "Denne nettsiden bygges.",
+    "page-4-message": "Men jeg håper du liker det."
+  },
+  "Tp": {
+    "welcome": "Kama Pona!",
+    "node-options": "Ilo Ante",
+    "node-num-label": "Mute Pini",
+    "node-conn-label": "Mute Linja",
+    "node-speed-label": "Wawa Tawa",
+    "node-path-label": "Pini li Tawa Palisa anu Seme",
+    "page-2-message": "Mi wile e sina pona.",
+    "page-3-message": "Tenpo ni la mi pali e lipu ni pi ma toki.",
+    "page-4-message": "Taso, mi wile e ni: lipu pi ma toki li pona tawa sina."
+  }
+}

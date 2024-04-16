@@ -70,7 +70,8 @@ p{
 
 
 #lang-button{
-    right: 0;
+    left: 0;
+    top: 0;
     margin-right: 1vw;
     position: fixed;
 }
@@ -86,6 +87,7 @@ p{
     line-height: 5vh;
     text-align: center;
     font-size: 4vh;
+    color: white;
 }
 
 .section{
@@ -95,9 +97,10 @@ p{
 }
 
 .options{
-    background-color: white;
+    background-color: #555555;
+    color: white;
     bottom: 0;
-    left: 0;
+    right: 0;
     position: absolute;
     z-index: 2;
     border-color: white;

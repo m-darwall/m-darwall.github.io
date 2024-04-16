@@ -8,62 +8,47 @@
         <link rel="stylesheet" href="main.css">
     </head>
     <body>
-        <div class="help">
-            <div class="circle" id="help-button">?</div>
-            <span data-language="En" class="help-text">Click anywhere to create a new node (Max. 1000 nodes)</span>
-            <span data-language="Cy" class="help-text">Cliciwch unrhyw le i creu nod newydd (Dim mwy na 1000)</span>
-            <span data-language="Es" class="help-text">Haga clic en cualquier lugar para crear un nuevo nodo (máximo de 1000 nodos)</span>
-            <span data-language="Nb" class="help-text">Klikk hvor som helst for å opprette en ny node (maksimalt 1000 noder)</span>
-            <span data-language="Tp" class="help-text">Sina wile ala wile pali e pini. o luka e ma ale. (mute li pini e kulupu pi nanpa ken)</span>
-        </div>
         <div class="circle" id="lang-button" onclick="change_language()">En</div>
         <div id="nodes" class="section">
-            <h1 data-language="En">Welcome.</h1>
-            <h1 data-language="Cy">Croeso.</h1>
-            <h1 data-language="Es">Bienvenido.</h1>
-            <h1 data-language="Nb">Velkommen.</h1>
-            <h1 data-language="Tp">Kama pona.</h1>
+            <h1 id="welcome">Welcome.</h1>
     	    <canvas id="node-canvas"></canvas>
             <script src="nodes.js"></script>
-            <div class="options" id="node-options">
-                <h2>Options</h2>
-                <label for="node-count" data-language="En">Number of Nodes</label>
+            <div class="options">
+                <h2 id="node-options">Options</h2>
+                <label for="node-count"  id="node-num-label">Number of Nodes</label>
                 <input type="range" min="2" max="1000" value="200" class="slider" id="node-count">
-                <label for="connection-count" data-language="En">Number of Connections</label>
+                <label for="connection-count" id="node-conn-label">Number of Connections</label>
                 <input type="range" min="1" max="20" value="7" class="slider" id="connection-count">
-                <label for="node-speed" data-language="En">Node Speed</label>
+                <label for="node-speed"  id="node-speed-label">Node Speed</label>
                 <input type="range" min="0" max="100" value="0.8" class="slider" id="node-speed">
-                <label for="node-path-straightness" data-language="En">Node Path Straightness</label>
+                <label for="node-path-straightness"  id="node-path-label">Node Path Straightness</label>
                 <input type="range" min="0" max="1000" value="967" class="slider" id="node-path-straightness">
             </div>
         </div>
         <div id="flocking" class="section">
-            <p data-language="En">I hope you're well.</p>
-            <p data-language="Cy">Rwy'n gobeithio bod chi'n dda.</p>
-            <p data-language="Es">Espero que estés bien.</p>
-            <p data-language="Nb">Jeg håper du har det bra</p>
-            <p data-language="Tp">Mi wile e sina pona.</p>
+            <p id="page-2-message">I hope you're well.</p>
         </div>
         <div id="section-3" class="section">
-            <p data-language="En">This page is under construction.</p>
-            <p data-language="Cy">Mae'r tudalen yma yn cael ei adeiladu.</p>
-            <p data-language="Es">Esta página esta en construccion.</p>
-            <p data-language="Nb">Denne nettsiden bygges.</p>
-            <p data-language="Tp">Tenpo ni la mi pali e lipu ni pi ma toki.</p>
+            <p  id="page-3-message">This page is under construction.</p>
         </div>
         <div id="section-4" class="section">
-            <p data-language="En">But I hope you enjoy it.</p>
-            <p data-language="Cy">Ond rwy'n gobeithio eich fod chi'n mwynhau e.</p>
-            <p data-language="Es">Pero espero que lo disfrutes.</p>
-            <p data-language="Nb">Men jeg håper du liker det.</p>
-            <p data-language="Tp">Taso, mi wile e ni: lipu pi ma toki li pona tawa sina.</p>
+            <p  id="page-4-message">But I hope you enjoy it.</p>
         </div>
 
     </body>
     <script>
-        let languages = ["En", "Cy", "Es", "Nb", "Tp"]
-        document.getElementById("lang-button").textContent = languages[languages.length-1];
-        change_language();
+        let translations;
+        async function fetchTranslations() {
+            try {
+                const response = await fetch("languages.json5");
+                translations = await response.json();
+            } catch (error) {
+                console.error('Error fetching or parsing data:', error);
+            }
+        }
+
+        fetchTranslations();
+        let languages = ["En", "Cy", "Es", "Nb", "Tp"];
         function change_language(){
             let current_lang = languages.indexOf(document.getElementById("lang-button").textContent);
             current_lang++;
@@ -72,26 +57,15 @@
             }
             current_lang = languages[current_lang];
             document.getElementById("lang-button").textContent = current_lang;
-            for(let lang=0;lang<languages.length;lang++){
-                let texts = document.querySelectorAll('[data-language=' + languages[lang] + ']');
-                if(languages[lang]===current_lang){
-                    for (let element = 0; element < texts.length; element++) {
-                        texts[element].style.display = 'block';
-                        if(texts[element].className !== "help-text") {
-                            texts[element].style.visibility = 'visible';
-                        }
-                    }
-                }else {
-                    for (let element = 0; element < texts.length; element++) {
-                        texts[element].style.display = 'none';
-                        if(texts[element].className !== "help-text") {
-                            texts[element].style.visibility = 'hidden';
-                        }
-                    }
-                }
+            let phrases = translations[current_lang];
+            let ids = Object.keys(phrases);
+            console.log(ids)
+            console.log(phrases)
+            for(let id_index = 0;id_index<ids.length;id_index++){
+                console.log(ids[id_index]);
+                console.log(phrases[ids[id_index]]);
+                document.getElementById(ids[id_index]).innerHTML = phrases[ids[id_index]];
             }
-
-
         }
     </script>
 </html>
