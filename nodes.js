@@ -95,12 +95,12 @@ window.onload = function(){
             cursor_y = mousePos.y;
             number_of_nodes++;
             nodes.push(new Node(cursor_x, cursor_y, getRandomDirection()));
-            console.log("click")
-            console.log(number_of_nodes);
         }
     }, false);
 
+
     document.addEventListener("resize", render, true);
+
 
     //Get Mouse Position
     function getMousePos(canvas, evt) {

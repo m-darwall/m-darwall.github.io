@@ -4,30 +4,83 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Welcome!</title>
+        <title>M Darwall</title>
         <link rel="stylesheet" href="main.css">
     </head>
     <body>
         <div class="help">
-            <div id="help-button">?</div>
-            <span class="help_text">Click anywhere to add another node (Max. 1000 nodes)</span>
+            <div class="circle" id="help-button">?</div>
+            <span data-language="En" class="help-text">Click anywhere to create a new node (Max. 1000 nodes)</span>
+            <span data-language="Cy" class="help-text">Cliciwch unrhyw le i creu nod newydd (Dim mwy na 1000)</span>
+            <span data-language="Es" class="help-text">Haga clic en cualquier lugar para crear un nuevo nodo (máximo de 1000 nodos)</span>
+            <span data-language="Nb" class="help-text">Klikk hvor som helst for å opprette en ny node (maksimalt 1000 noder)</span>
+            <span data-language="Tp" class="help-text">Sina wile ala wile pali e pini. o luka e ma ale. (mute li pini e kulupu pi nanpa ken)</span>
         </div>
+        <div class="circle" id="lang-button" onclick="change_language()">En</div>
         <div id="nodes" class="section">
-            <h1>Welcome.</h1>
-            <br>
+            <h1 data-language="En">Welcome.</h1>
+            <h1 data-language="Cy">Croeso.</h1>
+            <h1 data-language="Es">Bienvenido.</h1>
+            <h1 data-language="Nb">Velkommen.</h1>
+            <h1 data-language="Tp">Kama pona.</h1>
+
     	    <canvas id="node-canvas"></canvas>
             <script src="nodes.js"></script>
         </div>
         <div id="flocking" class="section">
-            <p>I hope you're well.</p>
+            <p data-language="En">I hope you're well.</p>
+            <p data-language="Cy">Rwy'n gobeithio bod chi'n dda.</p>
+            <p data-language="Es">Espero que estés bien.</p>
+            <p data-language="Nb">Jeg håper du har det bra</p>
+            <p data-language="Tp">Mi wile e sina pona.</p>
         </div>
         <div id="section-3" class="section">
-            <p>This page is under construction.</p>
+            <p data-language="En">This page is under construction.</p>
+            <p data-language="Cy">Mae'r tudalen yma yn cael ei adeiladu.</p>
+            <p data-language="Es">Esta página esta en construccion.</p>
+            <p data-language="Nb">Denne nettsiden bygges.</p>
+            <p data-language="Tp">Tenpo ni la mi pali e lipu ni pi ma toki.</p>
         </div>
         <div id="section-4" class="section">
-            <p>But I hope you enjoy it.</p>
+            <p data-language="En">But I hope you enjoy it.</p>
+            <p data-language="Cy">Ond rwy'n gobeithio eich fod chi'n mwynhau e.</p>
+            <p data-language="Es">Pero espero que lo disfrutes.</p>
+            <p data-language="Nb">Men jeg håper du liker det.</p>
+            <p data-language="Tp">Taso, mi wile e ni: lipu pi ma toki li pona tawa sina.</p>
         </div>
 
     </body>
+    <script>
+        let languages = ["En", "Cy", "Es", "Nb", "Tp"]
+        document.getElementById("lang-button").textContent = languages[languages.length-1];
+        change_language();
+        function change_language(){
+            let current_lang = languages.indexOf(document.getElementById("lang-button").textContent);
+            current_lang++;
+            if(current_lang === languages.length){
+                current_lang = 0;
+            }
+            current_lang = languages[current_lang];
+            document.getElementById("lang-button").textContent = current_lang;
+            for(let lang=0;lang<languages.length;lang++){
+                let texts = document.querySelectorAll('[data-language=' + languages[lang] + ']');
+                if(languages[lang]===current_lang){
+                    for (let element = 0; element < texts.length; element++) {
+                        if(texts[element].className !== "help-text") {
+                            texts[element].style.visibility = 'visible';
+                            texts[element].style.display = 'revert';
 
+                        }
+                    }
+                }else {
+                    for (let element = 0; element < texts.length; element++) {
+                        texts[element].style.visibility = 'hidden';
+                        texts[element].style.display = 'none';
+                    }
+                }
+            }
+
+
+        }
+    </script>
 </html>
