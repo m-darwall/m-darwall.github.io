@@ -66,16 +66,17 @@
                 let texts = document.querySelectorAll('[data-language=' + languages[lang] + ']');
                 if(languages[lang]===current_lang){
                     for (let element = 0; element < texts.length; element++) {
+                        texts[element].style.display = 'block';
                         if(texts[element].className !== "help-text") {
                             texts[element].style.visibility = 'visible';
-                            texts[element].style.display = 'revert';
-
                         }
                     }
                 }else {
                     for (let element = 0; element < texts.length; element++) {
-                        texts[element].style.visibility = 'hidden';
                         texts[element].style.display = 'none';
+                        if(texts[element].className !== "help-text") {
+                            texts[element].style.visibility = 'hidden';
+                        }
                     }
                 }
             }
