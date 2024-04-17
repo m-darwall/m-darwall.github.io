@@ -38,6 +38,7 @@ p{
     padding: 49vh 0 49vh 0;
     font-size: 2vh;
     width: 100%;
+    position: absolute;
 }
 .help-text{
     color: white;
@@ -111,6 +112,10 @@ p{
 
 h2{
     margin-top: -10px;
+}
+
+#flock-canvas{
+    background: linear-gradient(to top, #040308, #AD4A28, #DD723C, #FC7001, #DCB697, #9BA5AE, #3E5879, #020B1A);
 }
 
 @media only screen and (max-width:300px){

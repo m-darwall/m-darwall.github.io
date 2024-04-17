@@ -11,8 +11,8 @@
         <div class="circle" id="lang-button" onclick="change_language()">En</div>
         <div id="nodes" class="section">
             <h1 id="welcome">Welcome.</h1>
-    	    <canvas id="node-canvas"></canvas>
-            <script src="nodes.js"></script>
+    	    <canvas class="canvas" id="node-canvas"></canvas>
+
             <div class="options">
                 <h2 id="node-options">Options</h2>
                 <label for="node-count"  id="node-num-label">Number of Nodes</label><br>
@@ -27,6 +27,8 @@
         </div>
         <div id="flocking" class="section">
             <p id="page-2-message">I hope you're well.</p>
+            <canvas class="canvas" id="flock-canvas"></canvas>
+
         </div>
         <div id="section-3" class="section">
             <p  id="page-3-message">This page is under construction.</p>
@@ -36,6 +38,8 @@
         </div>
 
     </body>
+    <script src="nodes.js"></script>
+    <script src="flock.js"></script>
     <script>
         let translations;
         async function fetchTranslations() {
@@ -59,13 +63,48 @@
             document.getElementById("lang-button").textContent = current_lang;
             let phrases = translations[current_lang];
             let ids = Object.keys(phrases);
-            console.log(ids)
-            console.log(phrases)
             for(let id_index = 0;id_index<ids.length;id_index++){
-                console.log(ids[id_index]);
-                console.log(phrases[ids[id_index]]);
                 document.getElementById(ids[id_index]).innerHTML = phrases[ids[id_index]];
             }
         }
+
+
+        // Function to start the animation loop for a canvas
+        function startAnimation(check_canvas) {
+            // Your animation code here
+            if (check_canvas.id==="node-canvas"){
+                console.log("start nodes")
+                stop_birds();
+                start_nodes();
+            }else if (check_canvas.id==="flock-canvas"){
+                console.log("start birds")
+                stop_nodes()
+                start_birds()
+            }
+        }
+
+
+        // Intersection Observer callback function
+        function handleIntersection(entries) {
+            entries.forEach(entry => {
+                const check_canvas = entry.target;
+                if (entry.isIntersecting) {
+                    startAnimation(check_canvas);
+                }
+            });
+        }
+
+        // Options for the Intersection Observer
+        const options = {
+            threshold: 0.5 // Adjust as needed
+        };
+
+        // Create an Intersection Observer instance
+        const observer = new IntersectionObserver(handleIntersection, options);
+
+        // Target your canvases and observe them
+        const canvases = document.querySelectorAll('.canvas');
+        canvases.forEach(check_canvas => observer.observe(check_canvas));
+
     </script>
 </html>
