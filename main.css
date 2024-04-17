@@ -39,6 +39,7 @@ p{
     font-size: 2vh;
     width: 100%;
     position: absolute;
+    z-index: 2;
 }
 .help-text{
     color: white;
