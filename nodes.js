@@ -37,7 +37,7 @@ document.getElementById("node-count").onchange = function (){
         nodes = nodes.slice(0, number_of_nodes)
     }else{
         while(node_count > number_of_nodes){
-            addNode();
+            add_node();
         }
     }
     let connection_slider = document.getElementById("connection-count");
@@ -64,7 +64,7 @@ node_straightness_slider.onchange = function (){
     max_turn = ((1000-node_straightness_slider.value)/1000.0);
 }
 
-function addNode (x = Math.random()*canvas.width, y=Math.random()*canvas.height){
+function add_node (x = Math.random()*canvas.width, y=Math.random()*canvas.height){
     if(number_of_nodes < 1000) {
         number_of_nodes++;
         nodes.push(new Node(x, y, getRandomDirection()));
@@ -137,7 +137,6 @@ let node;
 let distance_to_cursor;
 
 function draw_nodes(){
-    console.log("drawing");
     ctx.strokeStyle = colour;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     for(let n = 0;n<number_of_nodes;n++) {
@@ -204,28 +203,28 @@ function draw_nodes(){
 
 }
 function start_nodes(){
+    document.getElementById("node-options-container").style.visibility = "visible";
     window.addEventListener("resize", function(){render_nodes();draw_nodes();}, true);
     //add node on mouseclick
     window.addEventListener("mousedown", function (evt) {
         let mousePos = getMousePos(canvas, evt);
-        addNode(mousePos.x, mousePos.y);
+        add_node(mousePos.x, mousePos.y);
     }, false);
     render_nodes();
     for(let i = 0;i<number_of_nodes;i++){
         //nodes.push(new Node(0.5*canvas.width, 0.5*canvas.height, i*2 * Math.PI*(1/number_of_nodes)));
         nodes.push(new Node(Math.random()*canvas.width, Math.random()*canvas.height, getRandomDirection()));
     }
-    console.log("gonna draw");
     draw_nodes();
-    console.log("drawn");
 }
 function stop_nodes(){
+    document.getElementById("node-options-container").style.visibility = "hidden";
     window.cancelAnimationFrame(draw_nodes);
-    window.removeEventListener("resize", function(){render_nodes();draw_nodes();}, true);
+    window.removeEventListener("resize", function(){render_nodes();}, true);
 
     //add node on mouseclick
     window.removeEventListener("mousedown", function (evt) {
         let mousePos = getMousePos(canvas, evt);
-        addNode(mousePos.x, mousePos.y);
+        add_node(mousePos.x, mousePos.y);
     }, false);
 }

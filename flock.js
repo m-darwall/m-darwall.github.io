@@ -2,7 +2,23 @@
 let flock_canvas = document.getElementById("flock-canvas");
 let flock_canvas_height = document.documentElement.clientHeight;
 let flock_canvas_width = document.documentElement.clientWidth;
+let flock_ctx = flock_canvas.getContext("2d");
+
 let birds = [];
+const bird_colour = "#000000";
+let number_of_birds = 600;
+const max_birds = 1200;
+let max_speed = 10;
+let coherence = 0.005;
+let separation = 0.04;
+let alignment = 0.05;
+let personal_space = 20;
+let view_distance = 80;
+let bird;
+const bird_length = 6;
+const bird_width = 6;
+const margin = -100;
+const turn_intensity = 1;
 
 function render() {
     flock_canvas.width = document.documentElement.clientWidth;
@@ -17,6 +33,52 @@ function render() {
     flock_canvas_width = flock_canvas.width;
     flock_canvas_height = flock_canvas.height;
 }
+
+function add_bird(x = Math.random()*flock_canvas.width, y=Math.random()*flock_canvas.height){
+    if(number_of_birds < max_birds) {
+        number_of_birds++;
+        birds.push(new Bird(x, y, (Math.random()-0.5)*2*max_speed, (Math.random()-0.5)*2*max_speed));
+        document.getElementById("bird-count").value = number_of_birds;
+    }
+}
+
+document.getElementById("bird-count").onchange = function (){
+    let bird_count = parseInt(document.getElementById("bird-count").value);
+    if(bird_count<=number_of_birds){
+        number_of_birds = bird_count;
+        birds = birds.slice(0, number_of_birds)
+    }else{
+        while(bird_count > number_of_birds){
+            add_bird();
+        }
+    }
+}
+
+let bird_speed_slider = document.getElementById("bird-speed");
+bird_speed_slider.onchange = function (){
+    if(max_speed !== 0){
+        let speed_change =  bird_speed_slider.value / max_speed;
+        birds.forEach(function(a){a.dx*=speed_change;a.dy*=speed_change});
+    } else{
+        birds.forEach(function(a){a.dx=1;a.dy=1});
+    }
+    max_speed = parseInt(document.getElementById("bird-speed").value);
+}
+
+function input_updater(variable_name, adjuster_name,factor = 1){
+    console.log(window);
+    console.log(window[variable_name]);
+    window[variable_name] = parseInt(document.getElementById(adjuster_name).value) * factor;
+
+}
+bird_coherence_slider = document.getElementById("bird-coherence");
+bird_coherence_slider.onchange = function(){coherence=bird_coherence_slider.value*(1.0/1000);};
+bird_separation_slider = document.getElementById("bird-separation");
+bird_separation_slider.onchange = function(){separation=bird_separation_slider.value*(1.0/1000);};
+bird_alignment_slider = document.getElementById("bird-alignment");
+bird_alignment_slider.onchange = function(){alignment=bird_alignment_slider.value*(1.0/1000);};
+bird_eyesight_slider = document.getElementById("bird-eyesight");
+bird_eyesight_slider.onchange = function(){view_distance=bird_eyesight_slider.value;};
 
 
 class Bird{
@@ -77,8 +139,8 @@ class Bird{
         if(bird_quantity) {
             this._dx += alignment * ((x_align / bird_quantity)-this._dx);
             this._dy += alignment * ((y_align / bird_quantity)-this._dy);
-            this._dx += coherence * (((x_cohere) / bird_quantity)-this._x)
-            this._dy += coherence * (((y_cohere) / bird_quantity)-this._y)
+            this._dx += coherence * (((x_cohere) / bird_quantity)-this.x);
+            this._dy += coherence * (((y_cohere) / bird_quantity)-this.y);
         }
     }
 
@@ -88,8 +150,8 @@ class Bird{
         let bird_quantity = 0;
         for(let b=0;b<birds.length;b++){
             if(getDistance(this, birds[b])<personal_space && birds[b]!==this){
-                goal_x += this._x - birds[b].x;
-                goal_y += this._y - birds[b].y;
+                goal_x += this.x - birds[b].x;
+                goal_y += this.y - birds[b].y;
                 bird_quantity++;
             }
         }
@@ -100,14 +162,14 @@ class Bird{
     }
 
     avoidEdge() {
-        if (this._x < margin) {
+        if (this.x < margin) {
             this._dx += turn_intensity;
-        } else if (this._x > flock_canvas.width - margin) {
+        } else if (this.x > flock_canvas.width - margin) {
             this._dx -= turn_intensity;
         }
-        if (this._y < margin) {
+        if (this.y < margin) {
             this._dy += turn_intensity;
-        } else if (this._y > flock_canvas.height - margin) {
+        } else if (this.y > flock_canvas.height - margin) {
             this._dy -= turn_intensity;
         }
     }
@@ -122,20 +184,7 @@ function getDistance(bird1, bird2){
 }
 
 //draw
-let flock_ctx = flock_canvas.getContext("2d");
-let bird_colour = "#000000";
-let number_of_birds = 600;
-let max_speed = 10;
-let coherence = 0.005;
-let separation = 0.04;
-let alignment = 0.05;
-let personal_space = 20;
-let view_distance = 80;
-let bird;
-let bird_length = 6;
-let bird_width = 6;
-let margin = -70;
-let turn_intensity = 1;
+
 
 function draw(){
     if (birds.length===0){
@@ -154,9 +203,9 @@ function draw(){
          bird.avoidEdge();
 
         let speed = (Math.sqrt(bird.dx**2 + bird.dy**2));
-        if(speed  > max_speed){
-            bird.dx *= max_speed/speed;
-            bird.dy *= max_speed/speed;
+        if(Math.abs(speed)  > max_speed){
+            bird.dx *= Math.abs(max_speed/speed);
+            bird.dy *= Math.abs(max_speed/speed);
         }
         bird.x += bird.dx;
         bird.y += bird.dy;
@@ -178,15 +227,16 @@ function draw(){
 }
 
 function stop_birds(){
+    document.getElementById("flock-options-container").style.visibility = "hidden";
     window.cancelAnimationFrame(draw);
     window.removeEventListener("resize", function(){render();draw();}, true);
-    birds=[];
+
 }
 
 function start_birds(){
-    window.addEventListener("resize", function(){render();draw();}, true);
+    document.getElementById("flock-options-container").style.visibility = "visible";
+    window.addEventListener("resize", function(){render();}, true);
     render();
-
     draw();
 }
 

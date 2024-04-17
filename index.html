@@ -12,8 +12,7 @@
         <div id="nodes" class="section">
             <h1 id="welcome">Welcome.</h1>
     	    <canvas class="canvas" id="node-canvas"></canvas>
-
-            <div class="options">
+            <div class="options" id="node-options-container">
                 <h2 id="node-options">Options</h2>
                 <label for="node-count"  id="node-num-label">Number of Nodes</label><br>
                 <input type="range" min="2" max="1000" value="200" class="slider" id="node-count"><br>
@@ -28,7 +27,21 @@
         <div id="flocking" class="section">
             <p id="page-2-message">I hope you're well.</p>
             <canvas class="canvas" id="flock-canvas"></canvas>
-
+            <div class="options" id="flock-options-container">
+                <h2 id="flock-options">Options</h2>
+                <label for="bird-count"  id="flock-num-label">Number of Birds</label><br>
+                <input type="range" min="1" max="1200" value="600" class="slider" id="bird-count"><br>
+                <label for="bird-speed" id="bird-speed-label">Speed</label><br>
+                <input type="range" min="0" max="100" value="10" class="slider" id="bird-speed"><br>
+                <label for="bird-coherence"  id="bird-coherence-label">Coherence</label><br>
+                <input type="range" min="0" max="1000" value="5" class="slider" id="bird-coherence"><br>
+                <label for="bird-separation"  id="bird-separation-label">Separation</label><br>
+                <input type="range" min="0" max="1000" value="40" class="slider" id="bird-separation"><br>
+                <label for="bird-alignment"  id="bird-alignment-label">Alignment</label><br>
+                <input type="range" min="0" max="1000" value="50" class="slider" id="bird-alignment"><br>
+                <label for="bird-eyesight"  id="bird-eyesight-label">Sight Distance</label><br>
+                <input type="range" min="0" max="1000" value="80" class="slider" id="bird-eyesight"><br>
+            </div>
         </div>
         <div id="section-3" class="section">
             <p  id="page-3-message">This page is under construction.</p>
@@ -73,11 +86,9 @@
         function startAnimation(check_canvas) {
             // Your animation code here
             if (check_canvas.id==="node-canvas"){
-                console.log("start nodes")
                 stop_birds();
                 start_nodes();
             }else if (check_canvas.id==="flock-canvas"){
-                console.log("start birds")
                 stop_nodes()
                 start_birds()
             }
