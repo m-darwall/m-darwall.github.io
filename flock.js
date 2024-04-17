@@ -3,7 +3,7 @@ let flock_canvas = document.getElementById("flock-canvas");
 let flock_canvas_height = document.documentElement.clientHeight;
 let flock_canvas_width = document.documentElement.clientWidth;
 let flock_ctx = flock_canvas.getContext("2d");
-
+let continue_animating_birds = true;
 let birds = [];
 const bird_colour = "#000000";
 let number_of_birds = 600;
@@ -223,17 +223,27 @@ function draw(){
         flock_ctx.stroke();
         flock_ctx.restore();
     }
-    window.requestAnimationFrame(draw);
+    if(continue_animating_birds){
+        window.requestAnimationFrame(draw);
+    }
+}
+function add_bird_at_mouse(evt){
+    let mousePos = getMousePos(flock_canvas, evt);
+    add_bird(mousePos.x, mousePos.y);
 }
 
+
 function stop_birds(){
+    continue_animating_birds = false;
     document.getElementById("flock-options-container").style.visibility = "hidden";
     window.cancelAnimationFrame(draw);
     window.removeEventListener("resize", function(){render();draw();}, true);
-
+    window.removeEventListener("mousedown", add_bird_at_mouse, false);
 }
 
 function start_birds(){
+    continue_animating_birds = true;
+    window.addEventListener("mousedown", add_bird_at_mouse, false);
     document.getElementById("flock-options-container").style.visibility = "visible";
     window.addEventListener("resize", function(){render();}, true);
     render();

@@ -5,7 +5,21 @@ let cursor_y = 0;
 let canvas = document.getElementById("node-canvas");
 let canvas_height = document.documentElement.clientHeight;
 let canvas_width = document.documentElement.clientWidth;
+let ctx = canvas.getContext("2d");
+let continue_animating = true;
 let nodes = [];
+let colour = "#34d8eb";
+let number_of_nodes = 200;
+let speed = 0.8;
+let max_turn = 1/30;
+let reaction_proximity = 100;
+let connections = 7;
+let modifier = 1;
+let node;
+let distance_to_cursor;
+
+
+
 function render_nodes() {
     canvas.width = document.documentElement.clientWidth;
     canvas.height = document.documentElement.clientHeight;
@@ -31,7 +45,8 @@ window.addEventListener("mousemove", function (evt) {
 
 
 document.getElementById("node-count").onchange = function (){
-    let node_count = document.getElementById("node-count").value;
+    let node_count = parseInt(document.getElementById("node-count").value);
+    console.log(node_count);
     if(node_count<=number_of_nodes){
         number_of_nodes = node_count;
         nodes = nodes.slice(0, number_of_nodes)
@@ -49,7 +64,7 @@ document.getElementById("node-count").onchange = function (){
 }
 
 document.getElementById("connection-count").onchange = function (){
-    let connection_count = document.getElementById("connection-count").value;
+    let connection_count = parseInt(document.getElementById("connection-count").value);
     if(connection_count <=(number_of_nodes/10)){
         connections = connection_count
     }
@@ -57,11 +72,11 @@ document.getElementById("connection-count").onchange = function (){
 
 let node_speed_slider = document.getElementById("node-speed");
 node_speed_slider.onchange = function (){
-    speed = node_speed_slider.value;
+    speed = parseInt(node_speed_slider.value);
 }
 let node_straightness_slider = document.getElementById("node-path-straightness");
 node_straightness_slider.onchange = function (){
-    max_turn = ((1000-node_straightness_slider.value)/1000.0);
+    max_turn = ((1000-parseInt(node_straightness_slider.value))/1000.0);
 }
 
 function add_node (x = Math.random()*canvas.width, y=Math.random()*canvas.height){
@@ -125,20 +140,17 @@ function getRandomDirection() {
 }
 
 //draw
-let ctx = canvas.getContext("2d");
-let colour = "#34d8eb";
-let number_of_nodes = 200;
-let speed = 0.8;
-let max_turn = 1/30;
-let reaction_proximity = 100;
-let connections = 7;
-let modifier = 1;
-let node;
-let distance_to_cursor;
+
 
 function draw_nodes(){
     ctx.strokeStyle = colour;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if(nodes.length < 1){
+        for(let i = 0;i<number_of_nodes;i++){
+            //nodes.push(new Node(0.5*canvas.width, 0.5*canvas.height, i*2 * Math.PI*(1/number_of_nodes)));
+            nodes.push(new Node(Math.random()*canvas.width, Math.random()*canvas.height, getRandomDirection()));
+        }
+    }
     for(let n = 0;n<number_of_nodes;n++) {
         node = nodes[n];
         distance_to_cursor = Math.sqrt((node.x - cursor_x) ** 2 + (node.y - cursor_y) ** 2);
@@ -198,33 +210,30 @@ function draw_nodes(){
         }
     }
     ctx.stroke();
+    if(continue_animating) {
+        window.requestAnimationFrame(draw_nodes);
+    }
+}
 
-    window.requestAnimationFrame(draw_nodes);
-
+function add_node_at_mouse(evt){
+    let mousePos = getMousePos(canvas, evt);
+    add_node(mousePos.x, mousePos.y);
 }
 function start_nodes(){
+    continue_animating = true;
     document.getElementById("node-options-container").style.visibility = "visible";
     window.addEventListener("resize", function(){render_nodes();draw_nodes();}, true);
     //add node on mouseclick
-    window.addEventListener("mousedown", function (evt) {
-        let mousePos = getMousePos(canvas, evt);
-        add_node(mousePos.x, mousePos.y);
-    }, false);
+    window.addEventListener("mousedown", add_node_at_mouse, false);
     render_nodes();
-    for(let i = 0;i<number_of_nodes;i++){
-        //nodes.push(new Node(0.5*canvas.width, 0.5*canvas.height, i*2 * Math.PI*(1/number_of_nodes)));
-        nodes.push(new Node(Math.random()*canvas.width, Math.random()*canvas.height, getRandomDirection()));
-    }
     draw_nodes();
 }
 function stop_nodes(){
+    continue_animating = false;
+    console.log("stop");
     document.getElementById("node-options-container").style.visibility = "hidden";
-    window.cancelAnimationFrame(draw_nodes);
-    window.removeEventListener("resize", function(){render_nodes();}, true);
-
-    //add node on mouseclick
-    window.removeEventListener("mousedown", function (evt) {
-        let mousePos = getMousePos(canvas, evt);
-        add_node(mousePos.x, mousePos.y);
-    }, false);
+    // window.removeEventListener("resize", function(){render_nodes();}, true);
+    //
+    // //add node on mouseclick
+    // window.removeEventListener("mousedown", add_node_at_mouse, true);
 }
