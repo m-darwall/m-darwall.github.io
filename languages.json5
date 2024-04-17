@@ -8,7 +8,14 @@
     "node-path-label": "Path Straightness",
     "page-2-message": "I hope you're well.",
     "page-3-message": "This page is under construction.",
-    "page-4-message": "But I hope you enjoy it."
+    "page-4-message": "But I hope you enjoy it.",
+    "flock-options": "Options",
+    "flock-num-label": "Number of Birds",
+    "bird-speed-label": "Speed",
+    "bird-coherence-label": "Coherence",
+    "bird-separation-label": "Separation",
+    "bird-alignment-label": "Alignment",
+    "bird-eyesight-label": "Sight Distance"
   },
   "Cy": {
     "welcome": "Croeso!",
@@ -19,7 +26,14 @@
     "node-path-label": "Uniondeb Llwybr",
     "page-2-message": "Rwy'n gobeithio bod chi'n dda.",
     "page-3-message": "Mae'r tudalen yma yn cael ei adeiladu.",
-    "page-4-message": "Ond rwy'n gobeithio eich fod chi'n mwynhau e."
+    "page-4-message": "Ond rwy'n gobeithio eich fod chi'n mwynhau e.",
+    "flock-options": "Opsiynau",
+    "flock-num-label": "Nifer o Adar",
+    "bird-speed-label": "Cyflymder",
+    "bird-coherence-label": "Cydlynian",
+    "bird-separation-label": "Gwahaniad",
+    "bird-alignment-label": "Aliniad",
+    "bird-eyesight-label": "Pellter Golwg"
   },
   "Es": {
     "welcome": "Bienvenido!",
@@ -30,7 +44,14 @@
     "node-path-label": "Rectitud del Camino",
     "page-2-message": "Espero que estés bien.",
     "page-3-message": "Esta página esta en construccion.",
-    "page-4-message": "Pero espero que lo disfrutes."
+    "page-4-message": "Pero espero que lo disfrutes.",
+    "flock-options": "Ajustes",
+    "flock-num-label": "Número de Aves",
+    "bird-speed-label": "Velocidad",
+    "bird-coherence-label": "Coherencia",
+    "bird-separation-label": "Separación",
+    "bird-alignment-label": "Alineación",
+    "bird-eyesight-label": "Distancia de Visión"
   },
   "Nb": {
     "welcome": "Velkommen!",
@@ -39,9 +60,16 @@
     "node-conn-label": "Antall Tilkoblinger",
     "node-speed-label": "Hastighet",
     "node-path-label": "Sti Retthet",
-    "page-2-message": "Jeg håper du har det bra",
+    "page-2-message": "Jeg håper du har det bra.",
     "page-3-message": "Denne nettsiden bygges.",
-    "page-4-message": "Men jeg håper du liker det."
+    "page-4-message": "Men jeg håper du liker det.",
+    "flock-options": "Instillinger",
+    "flock-num-label": "Antall fugler",
+    "bird-speed-label": "Hastighet",
+    "bird-coherence-label": "Sammenheng",
+    "bird-separation-label": "Atskillelse",
+    "bird-alignment-label": "Justering",
+    "bird-eyesight-label": "Siktavstand"
   },
   "Tp": {
     "welcome": "Kama Pona!",
@@ -52,6 +80,13 @@
     "node-path-label": "Pini li Tawa Palisa anu Seme",
     "page-2-message": "Mi wile e sina pona.",
     "page-3-message": "Tenpo ni la mi pali e lipu ni pi ma toki.",
-    "page-4-message": "Taso, mi wile e ni: lipu pi ma toki li pona tawa sina."
+    "page-4-message": "Taso, mi wile e ni: lipu pi ma toki li pona tawa sina.",
+    "flock-options": "Ilo Ante",
+    "flock-num-label": "Mute Waso",
+    "bird-speed-label": "Wawa Tawa",
+    "bird-coherence-label": "Kama Kulupu",
+    "bird-separation-label": "Weka Insi",
+    "bird-alignment-label": "Nasin Kulupu",
+    "bird-eyesight-label": "Mute Linja Lukin"
   }
 }
