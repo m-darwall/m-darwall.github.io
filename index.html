@@ -54,7 +54,7 @@
     <script src="nodes.js"></script>
     <script src="flock.js"></script>
     <script>
-        let translations;
+        //get translations from file
         async function fetchTranslations() {
             try {
                 const response = await fetch("languages.json5");
@@ -64,8 +64,7 @@
             }
         }
 
-        fetchTranslations();
-        let languages = ["En", "Cy", "Es", "Nb", "Tp"];
+        //change language to next language in list
         function change_language(){
             let current_lang = languages.indexOf(document.getElementById("lang-button").textContent);
             current_lang++;
@@ -81,7 +80,6 @@
             }
         }
 
-
         // Function to start the animation loop for a canvas
         function startAnimation(check_canvas) {
             // Your animation code here
@@ -94,7 +92,6 @@
             }
         }
 
-
         // Intersection Observer callback function
         function handleIntersection(entries) {
             entries.forEach(entry => {
@@ -104,6 +101,10 @@
                 }
             });
         }
+
+        let translations;
+        fetchTranslations();
+        let languages = ["En", "Cy", "Es", "Nb", "Tp"];
 
         // Options for the Intersection Observer
         const options = {
