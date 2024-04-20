@@ -35,11 +35,11 @@ h1{
 
 p{
     color: white;
-    padding: 49vh 0 49vh 0;
+    margin: 49vh 0 49vh 0;
     font-size: 2vh;
     width: 100%;
     position: absolute;
-    z-index: 2;
+    z-index: 1;
 }
 .help-text{
     color: white;
