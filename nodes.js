@@ -174,17 +174,17 @@ function draw_nodes(current_time_nodes){
         if (node.x > canvas.width || node.x < 0) {
             node.direction = Math.PI - node.direction;
             if(node.x < 0){
-                node.x = 0;
+                node.x = 1;
             } else{
-                node.x = canvas.width;
+                node.x = canvas.width - 1;
             }
         }
         if (node.y > canvas.height || node.y < 0) {
             node.direction = 2 * Math.PI - node.direction;
             if(node.y < 0){
-                node.y = 0;
+                node.y = 1;
             } else{
-                node.y = canvas.height;
+                node.y = canvas.height - 1;
             }
         }
         node.x = node.x + (modifier * speed * Math.cos(node.direction)*node_delta_time*0.1);
