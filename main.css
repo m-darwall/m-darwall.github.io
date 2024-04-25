@@ -25,12 +25,9 @@ h1{
     z-index: 1;
     left: 0;
     right: 0;
-    align-items: center;
-    display: grid;
     font-size: 10vh;
-    margin:45vh 0 45vh 0;
-    /*margin: 0;*/
-
+    margin:45vh 0 0 0;
+    overflow-wrap: break-word;
 }
 
 p{
@@ -138,5 +135,8 @@ canvas{
     .help .help_text {
         width:90vw;
         top: 7vh;
+    }
+    h1{
+        font-size: 2vh;
     }
 }
