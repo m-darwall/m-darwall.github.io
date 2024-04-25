@@ -79,6 +79,13 @@ p{
     z-index: 2;
 }
 
+#options-button{
+    position: fixed;
+    z-index: 3;
+    right: 0;
+    bottom: 0;
+}
+
 
 .circle{
     height: 5vh;
@@ -108,9 +115,11 @@ p{
     z-index: 2;
     border-color: white;
     border-radius: 20px;
-    padding: 20px;
+    padding: 20px 20px 5vh 20px;
     opacity: 90%;
 }
+
+
 
 h2{
     margin-top: -10px;

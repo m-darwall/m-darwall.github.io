@@ -9,6 +9,7 @@
     </head>
     <body>
         <div class="circle" id="lang-button" onclick="change_language()">En</div>
+        <div class="circle" id="options-button" onclick="toggle_options()">⚙️</div>
         <div id="nodes" class="section">
             <h1 id="welcome">Welcome.</h1>
     	    <canvas class="canvas" id="node-canvas"></canvas>
@@ -80,9 +81,19 @@
             }
         }
 
+        function toggle_options(){
+            let elements = document.getElementsByClassName("options");
+            for(let i = 0;i<elements.length;i++){
+                if(elements[i].style.display === "none"){
+                     elements[i].style.display = "block";
+                }else{
+                    elements[i].style.display = "none";
+                }
+            }
+        }
+
         // Function to start the animation loop for a canvas
         function startAnimation(check_canvas) {
-            // Your animation code here
             if (check_canvas.id==="node-canvas"){
                 stop_birds();
                 start_nodes();
@@ -104,6 +115,7 @@
 
         let translations;
         fetchTranslations();
+        toggle_options();
         let languages = ["En", "Cy", "Es", "Nb", "Tp"];
 
         // Options for the Intersection Observer
@@ -114,7 +126,7 @@
         // Create an Intersection Observer instance
         const observer = new IntersectionObserver(handleIntersection, options);
 
-        // Target your canvases and observe them
+        // Target canvases and observe them
         const canvases = document.querySelectorAll('.canvas');
         canvases.forEach(check_canvas => observer.observe(check_canvas));
 
