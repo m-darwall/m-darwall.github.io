@@ -19,6 +19,8 @@ const bird_length = 6;
 const bird_width = 6;
 const margin = -100;
 const turn_intensity = 1;
+let delta_time = 0;
+let previous_time;
 
 function render() {
     flock_canvas.width = document.documentElement.clientWidth;
@@ -186,7 +188,7 @@ function getDistance(bird1, bird2){
 //draw
 
 
-function draw(){
+function draw(current_time){
     if (birds.length===0){
         for(let i = 0;i<number_of_birds;i++){
             birds.push(new Bird(Math.random()*flock_canvas.width, Math.random()*flock_canvas.height, (Math.random()-0.5)*2*max_speed, (Math.random()-0.5)*2*max_speed));
@@ -195,6 +197,9 @@ function draw(){
     flock_ctx.strokeStyle = bird_colour;
     flock_ctx.fillStyle = bird_colour;
     flock_ctx.clearRect(0, 0, flock_canvas.width, flock_canvas.height);
+
+    delta_time = current_time - previous_time;
+    previous_time = current_time;
     for(let n = 0;n<number_of_birds;n++) {
         bird = birds[n];
 
@@ -207,8 +212,10 @@ function draw(){
             bird.dx *= Math.abs(max_speed/speed);
             bird.dy *= Math.abs(max_speed/speed);
         }
-        bird.x += bird.dx;
-        bird.y += bird.dy;
+
+
+        bird.x += bird.dx*delta_time*0.05;
+        bird.y += bird.dy*delta_time*0.05;
 
 
         flock_ctx.save(); // Save the current canvas state
@@ -222,6 +229,7 @@ function draw(){
         flock_ctx.fill();
         flock_ctx.stroke();
         flock_ctx.restore();
+
     }
     if(continue_animating_birds){
         window.requestAnimationFrame(draw);
@@ -247,7 +255,8 @@ function start_birds(){
     document.getElementById("flock-options-container").style.visibility = "visible";
     window.addEventListener("resize", function(){render();}, true);
     render();
-    draw();
+    previous_time = performance.now();
+    window.requestAnimationFrame(draw);
 }
 
 

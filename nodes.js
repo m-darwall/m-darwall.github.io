@@ -17,6 +17,8 @@ let connections = 7;
 let modifier = 1;
 let node;
 let distance_to_cursor;
+let previous_time_nodes;
+
 
 
 
@@ -142,7 +144,7 @@ function getRandomDirection() {
 //draw
 
 
-function draw_nodes(){
+function draw_nodes(current_time_nodes){
     ctx.strokeStyle = colour;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if(nodes.length < 1){
@@ -151,6 +153,8 @@ function draw_nodes(){
             nodes.push(new Node(Math.random()*canvas.width, Math.random()*canvas.height, getRandomDirection()));
         }
     }
+    node_delta_time = current_time_nodes - previous_time_nodes
+    previous_time_nodes = current_time_nodes
     for(let n = 0;n<number_of_nodes;n++) {
         node = nodes[n];
         distance_to_cursor = Math.sqrt((node.x - cursor_x) ** 2 + (node.y - cursor_y) ** 2);
@@ -173,8 +177,8 @@ function draw_nodes(){
         if (node.y > canvas.height || node.y < 0) {
             node.direction = 2 * Math.PI - node.direction;
         }
-        node.x = node.x + (modifier * speed * Math.cos(node.direction));
-        node.y = node.y + (modifier * speed * Math.sin(node.direction));
+        node.x = node.x + (modifier * speed * Math.cos(node.direction)*node_delta_time*0.1);
+        node.y = node.y + (modifier * speed * Math.sin(node.direction)*node_delta_time*0.1);
 
         //draw the nodes (unnecessary if showing connections)
         // ctx.beginPath();
@@ -226,11 +230,11 @@ function start_nodes(){
     //add node on mouseclick
     window.addEventListener("mousedown", add_node_at_mouse, false);
     render_nodes();
-    draw_nodes();
+    previous_time_nodes = performance.now();
+    window.requestAnimationFrame(draw_nodes);
 }
 function stop_nodes(){
     continue_animating = false;
-    console.log("stop");
     document.getElementById("node-options-container").style.visibility = "hidden";
     // window.removeEventListener("resize", function(){render_nodes();}, true);
     //
