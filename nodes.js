@@ -153,7 +153,7 @@ function draw_nodes(current_time_nodes){
             nodes.push(new Node(Math.random()*canvas.width, Math.random()*canvas.height, getRandomDirection()));
         }
     }
-    node_delta_time = current_time_nodes - previous_time_nodes
+    let node_delta_time = current_time_nodes - previous_time_nodes
     previous_time_nodes = current_time_nodes
     for(let n = 0;n<number_of_nodes;n++) {
         node = nodes[n];
@@ -246,8 +246,5 @@ function start_nodes(){
 function stop_nodes(){
     continue_animating = false;
     document.getElementById("node-options-container").style.visibility = "hidden";
-    // window.removeEventListener("resize", function(){render_nodes();}, true);
-    //
-    // //add node on mouseclick
-    // window.removeEventListener("mousedown", add_node_at_mouse, true);
+
 }

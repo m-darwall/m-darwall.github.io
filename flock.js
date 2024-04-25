@@ -245,8 +245,7 @@ function stop_birds(){
     continue_animating_birds = false;
     document.getElementById("flock-options-container").style.visibility = "hidden";
     window.cancelAnimationFrame(draw);
-    window.removeEventListener("resize", function(){render();draw();}, true);
-    window.removeEventListener("mousedown", add_bird_at_mouse, false);
+
 }
 
 function start_birds(){
