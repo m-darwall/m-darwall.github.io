@@ -236,7 +236,7 @@ function add_node_at_mouse(evt){
 function start_nodes(){
     continue_animating = true;
     document.getElementById("node-options-container").style.visibility = "visible";
-    window.addEventListener("resize", function(){render_nodes();draw_nodes();}, true);
+    window.addEventListener("resize", function(){render_nodes();}, true);
     //add node on mouseclick
     window.addEventListener("mousedown", add_node_at_mouse, false);
     render_nodes();
