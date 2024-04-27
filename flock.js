@@ -274,7 +274,6 @@ function draw(current_time){
                 0,
                 -b[0]
             ];
-            let s = Math.sqrt(v[0]**2 + v[1]**2 + v[2]**2);
             let c =  b[1];
 
             let vCross = [
