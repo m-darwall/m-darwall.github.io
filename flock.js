@@ -1,50 +1,60 @@
-
+// canvas variables
 let flock_canvas = document.getElementById("flock-canvas");
 let flock_canvas_height = document.documentElement.clientHeight;
 let flock_canvas_width = document.documentElement.clientWidth;
 let flock_ctx = flock_canvas.getContext("2d");
 let continue_animating_birds = true;
+
+// bird tracking variables
 let birds = [];
-const bird_colour = "#000000";
-let number_of_birds = 600;
-const max_birds = 1200;
-let max_speed = 10;
-let coherence = 0.005;
-let separation = 0.04;
-let alignment = 0.05;
-let personal_space = 20;
-let view_distance = 80;
 let bird;
+let delta_time = 0;
+let previous_time;
+
+// preset variables
+const bird_colour = "#000000";
+const max_birds = 1200;
+const personal_space = 20;
 const bird_length = 6;
 const bird_width = 6;
 const margin = -100;
 const turn_intensity = 1;
-let delta_time = 0;
-let previous_time;
-let flock_depth = 3000;
-let distance_to_camera = -flock_depth;
+const flock_depth = 3000;
+const distance_to_camera = -flock_depth;
 const scale = 1.5;
 let field_of_view_horizontal = Math.PI/8;
 let field_of_view_vertical = Math.PI/8;
+
+// user adjustable variables
 let birds_3d = true;
+let number_of_birds = 600;
+let view_distance = 80;
+let max_speed = 10;
+let coherence = 0.005;
+let separation = 0.04;
+let alignment = 0.05;
 
-
+// adjusts canvas proportions
 function render() {
+    // set canvas proportions to match screen
     flock_canvas.width = document.documentElement.clientWidth;
     flock_canvas.height = document.documentElement.clientHeight;
     let width_change = flock_canvas.width/flock_canvas_width;
     let height_change = flock_canvas.height/flock_canvas_height;
     birds.forEach(
+        // adjust bird positions on resize to keep all in frame
         function (node){
             node.x *= width_change;
             node.y *= height_change;
         });
     flock_canvas_width = flock_canvas.width;
     flock_canvas_height = flock_canvas.height;
+    //adjust field of view for 3d view to suit proportions
     field_of_view_horizontal = 2*Math.atan(flock_canvas_width/(2*distance_to_camera));
     field_of_view_vertical = 2*Math.atan(flock_canvas_height/(2*distance_to_camera));
 }
 
+//adds a new bird to given location or defaults to a random position if unspecified
 function add_bird(x = Math.random()*flock_canvas.width, y=Math.random()*flock_canvas.height, z= Math.random()*flock_depth){
     if(number_of_birds < max_birds) {
         number_of_birds++;
@@ -53,6 +63,7 @@ function add_bird(x = Math.random()*flock_canvas.width, y=Math.random()*flock_ca
     }
 }
 
+// adjust number of birds when slider is adjusted
 document.getElementById("bird-count").onchange = function (){
     let bird_count = parseInt(document.getElementById("bird-count").value);
     if(bird_count<=number_of_birds){
@@ -65,6 +76,7 @@ document.getElementById("bird-count").onchange = function (){
     }
 }
 
+// adjust maximum bird speed when slider is adjusted
 let bird_speed_slider = document.getElementById("bird-speed");
 bird_speed_slider.onchange = function (){
     if(max_speed !== 0){
@@ -76,16 +88,22 @@ bird_speed_slider.onchange = function (){
     max_speed = parseInt(document.getElementById("bird-speed").value);
 }
 
+// update coherence when slider is adjusted
 let bird_coherence_slider = document.getElementById("bird-coherence");
 bird_coherence_slider.onchange = function(){coherence=bird_coherence_slider.value*(1.0/1000);};
+// update separation when slider is adjusted
 let bird_separation_slider = document.getElementById("bird-separation");
 bird_separation_slider.onchange = function(){separation=bird_separation_slider.value*(1.0/1000);};
+// update alignment when slider is adjusted
 let bird_alignment_slider = document.getElementById("bird-alignment");
 bird_alignment_slider.onchange = function(){alignment=bird_alignment_slider.value*(1.0/1000);};
+// update view range when slider is adjusted
 let bird_eyesight_slider = document.getElementById("bird-eyesight");
 bird_eyesight_slider.onchange = function(){view_distance=bird_eyesight_slider.value;};
+// update dimensions when checkbox checked/unchecked
 let bird_3d_checkbox = document.getElementById("bird-3d");
 bird_3d_checkbox.onchange = function(){
+    // if switching to 2d, set all z values to 0
     if(birds_3d && !bird_3d_checkbox.checked){
         for(let bird_index = 0;bird_index<birds.length;bird_index++){
             birds[bird_index].z = 0;
@@ -93,6 +111,7 @@ bird_3d_checkbox.onchange = function(){
         }
         birds_3d = false;
     }
+    // if switching to 3d, assign random z values
     if(!birds_3d && bird_3d_checkbox.checked){
         for(let bird_index = 0;bird_index<birds.length;bird_index++){
             birds[bird_index].z = (Math.random()-0.5)*flock_depth;
@@ -111,6 +130,7 @@ class Bird{
         this._dx = dx;
         this._dy = dy;
         this._dz = dz;
+        // set z values to 0 if in 2d
         if(!birds_3d){
             this._dz = 0;
             this._z = 0;
@@ -165,6 +185,7 @@ class Bird{
         this._y = value;
     }
 
+    // adjust direction to align with nearby birds and head towards center of nearby birds
     align_and_cohere(){
         let x_align = 0;
         let y_align = 0;
@@ -194,6 +215,7 @@ class Bird{
         }
     }
 
+    // adjust direction to avoid getting too close to other birds
     separate(){
         let goal_x = 0;
         let goal_y = 0;
@@ -214,6 +236,7 @@ class Bird{
         }
     }
 
+    // adjust direction to steer away from edges
     avoidEdge() {
         if (this.x < margin) {
             this._dx += turn_intensity;
@@ -236,7 +259,7 @@ class Bird{
 
 }
 
-
+// gets distance between two birds
 function getDistance(bird1, bird2){
     if(birds_3d){
         return Math.sqrt((bird2.x-bird1.x)**2 + (bird2.y-bird1.y)**2 + (bird2.z-bird1.z)**2);
@@ -246,47 +269,56 @@ function getDistance(bird1, bird2){
 
 }
 
-//draw
 
-
+// draw current frame
 function draw(current_time){
+    // if no birds have been defined, add them
     if (birds.length===0){
         for(let i = 0;i<number_of_birds;i++){
             birds.push(new Bird(Math.random()*flock_canvas.width, Math.random()*flock_canvas.height, Math.random()*flock_depth, (Math.random()-0.5)*2*max_speed, (Math.random()-0.5)*2*max_speed, (Math.random()-0.5)*2*max_speed));
         }
     }
+    // set bird colour
     flock_ctx.strokeStyle = bird_colour;
     flock_ctx.fillStyle = bird_colour;
+    // clear canvas ready for new frame
     flock_ctx.clearRect(0, 0, flock_canvas.width, flock_canvas.height);
-
+    // get time elapsed since last frame
     delta_time = current_time - previous_time;
     previous_time = current_time;
+
+    //iterate through every bird
     for(let n = 0;n<number_of_birds;n++) {
         bird = birds[n];
 
-         bird.align_and_cohere();
-         bird.separate();
-         bird.avoidEdge();
+        // adjust direction according to rules
+        bird.align_and_cohere();
+        bird.separate();
+        bird.avoidEdge();
 
+        // calculate speed
         let speed = (Math.sqrt(bird.dx**2 + bird.dy**2 + bird.dz**2));
+        // slow down if exceeding maximum speed
         if(Math.abs(speed)  > max_speed){
             bird.dx *= Math.abs(max_speed/speed);
             bird.dy *= Math.abs(max_speed/speed);
             bird.dz *= Math.abs(max_speed/speed);
         }
 
-
+        // update position according to velocity
         bird.x += bird.dx*delta_time*0.05;
         bird.y += bird.dy*delta_time*0.05;
         bird.z += bird.dz*delta_time*0.05;
 
-
+        // projects a point in 3d space onto the 2d canvas
         function project(point){
             let depth = point[2]*scale + distance_to_camera;
             let new_x = point[0]/(1-depth/flock_canvas_width*Math.tan(field_of_view_horizontal/2));
             let new_y = point[1]/(1-depth/flock_canvas_height*Math.tan(field_of_view_vertical/2));
             return [new_x,new_y];
         }
+
+        // rotates point a around the origin according to vector b
         function rotate(a, b){
             let v = [
                 b[2],
@@ -333,25 +365,31 @@ function draw(current_time){
             return result;
         }
 
+        // points on the triangle when pointing in default direction
         let points = [
             [0,bird_length/2.0,0],
             [-bird_width*0.5, -bird_length/2.0,0],
             [bird_width*0.5, -bird_length/2.0,0]
         ];
 
+        // iterate through points on triangle
         for(let point_index=0;point_index<points.length;point_index++){
             let point = points[point_index];
+            //rotate the given point to align with bird velocity
             if(birds_3d){
                 point = rotate(point, [bird.dx/speed, bird.dy/speed, bird.dz/speed]);
             }else{
                 point = rotate(point, [bird.dx/speed, bird.dy/speed, 0]);
             }
+            // add position coordinates to move bird to correct position
             point = [point[0]+bird.x, point[1]+bird.y, point[2]+bird.z];
+            // if in 3d, project point from 3d to 2d
             if(birds_3d){
                 point = project(point);
             }
             points[point_index] = point;
         }
+        // draw the triangle
         flock_ctx.beginPath();
         flock_ctx.moveTo(points[0][0], points[0][1]);
         flock_ctx.lineTo(points[1][0], points[1][1]);
@@ -360,36 +398,27 @@ function draw(current_time){
         flock_ctx.fill();
         flock_ctx.stroke();
 
-        // flock_ctx.save(); // Save the current canvas state
-        // flock_ctx.translate(bird.x, bird.y); // Move the origin to the bird's position
-        // flock_ctx.rotate(Math.atan2(bird.dy, bird.dx)); // Rotate based on bird's velocity
-        // flock_ctx.beginPath();
-        // flock_ctx.moveTo(0, 0); // Start at the origin (center of the bird)
-        // flock_ctx.lineTo(-size*bird_length/2, size*bird_width/2); // Draw the left side of the triangle
-        // flock_ctx.lineTo(-size*bird_length/2, -size*bird_width/2); // Draw the right side of the triangle
-        // flock_ctx.closePath();
-        // flock_ctx.fill();
-        // flock_ctx.stroke();
-        // flock_ctx.restore();
-
     }
+    // continue animating unless told otherwise
     if(continue_animating_birds){
         window.requestAnimationFrame(draw);
     }
 }
+
+// adds a bird at mouse position on click
 function add_bird_at_mouse(evt){
     let mousePos = getMousePos(flock_canvas, evt);
     add_bird(mousePos.x, mousePos.y, Math.random()*flock_depth);
 }
 
-
+// stops animating birds
 function stop_birds(){
     continue_animating_birds = false;
     document.getElementById("flock-options-container").style.visibility = "hidden";
     window.cancelAnimationFrame(draw);
-
 }
 
+// starts animating birds
 function start_birds(){
     continue_animating_birds = true;
     window.addEventListener("mousedown", add_bird_at_mouse, false);
