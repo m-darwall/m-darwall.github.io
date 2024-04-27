@@ -261,12 +261,7 @@ class Bird{
 
 // gets distance between two birds
 function getDistance(bird1, bird2){
-    if(birds_3d){
-        return Math.sqrt((bird2.x-bird1.x)**2 + (bird2.y-bird1.y)**2 + (bird2.z-bird1.z)**2);
-    } else{
-        return Math.sqrt((bird2.x-bird1.x)**2 + (bird2.y-bird1.y)**2);
-    }
-
+    return Math.sqrt((bird2.x-bird1.x)**2 + (bird2.y-bird1.y)**2 + (bird2.z-bird1.z)**2);
 }
 
 
