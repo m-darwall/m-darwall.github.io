@@ -26,7 +26,7 @@ let distance_to_camera = -flock_depth;
 const scale = 1.5;
 const field_of_view_horizontal = Math.PI/8;
 const field_of_view_vertical = Math.PI/8;
-let birds_3d = false;
+let birds_3d = true;
 
 
 function render() {
