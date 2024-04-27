@@ -74,14 +74,31 @@ bird_speed_slider.onchange = function (){
     max_speed = parseInt(document.getElementById("bird-speed").value);
 }
 
-bird_coherence_slider = document.getElementById("bird-coherence");
+let bird_coherence_slider = document.getElementById("bird-coherence");
 bird_coherence_slider.onchange = function(){coherence=bird_coherence_slider.value*(1.0/1000);};
-bird_separation_slider = document.getElementById("bird-separation");
+let bird_separation_slider = document.getElementById("bird-separation");
 bird_separation_slider.onchange = function(){separation=bird_separation_slider.value*(1.0/1000);};
-bird_alignment_slider = document.getElementById("bird-alignment");
+let bird_alignment_slider = document.getElementById("bird-alignment");
 bird_alignment_slider.onchange = function(){alignment=bird_alignment_slider.value*(1.0/1000);};
-bird_eyesight_slider = document.getElementById("bird-eyesight");
+let bird_eyesight_slider = document.getElementById("bird-eyesight");
 bird_eyesight_slider.onchange = function(){view_distance=bird_eyesight_slider.value;};
+let bird_3d_checkbox = document.getElementById("bird-3d");
+bird_3d_checkbox.onchange = function(){
+    if(birds_3d && !bird_3d_checkbox.checked){
+        for(let bird_index = 0;bird_index<birds.length;bird_index++){
+            birds[bird_index].z = 0;
+            birds[bird_index].dz = 0
+        }
+        birds_3d = false;
+    }
+    if(!birds_3d && bird_3d_checkbox.checked){
+        for(let bird_index = 0;bird_index<birds.length;bird_index++){
+            birds[bird_index].z = (Math.random()-0.5)*flock_depth;
+            birds[bird_index].dz = (Math.random()-0.5)*2*max_speed;
+        }
+        birds_3d = true;
+    }
+};
 
 
 class Bird{

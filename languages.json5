@@ -15,7 +15,8 @@
     "bird-coherence-label": "Coherence",
     "bird-separation-label": "Separation",
     "bird-alignment-label": "Alignment",
-    "bird-eyesight-label": "Sight Distance"
+    "bird-eyesight-label": "Sight Distance",
+    "bird-3d-label": "3D Sky"
   },
   "Cy": {
     "welcome": "Croeso!",
@@ -33,7 +34,8 @@
     "bird-coherence-label": "Cydlynian",
     "bird-separation-label": "Gwahaniad",
     "bird-alignment-label": "Aliniad",
-    "bird-eyesight-label": "Pellter Golwg"
+    "bird-eyesight-label": "Pellter Golwg",
+    "bird-3d-label": "Awyr 3D"
   },
   "Es": {
     "welcome": "Bienvenido!",
@@ -51,7 +53,8 @@
     "bird-coherence-label": "Coherencia",
     "bird-separation-label": "Separación",
     "bird-alignment-label": "Alineación",
-    "bird-eyesight-label": "Distancia de Visión"
+    "bird-eyesight-label": "Distancia de Visión",
+    "bird-3d-label": "Cielo 3D"
   },
   "Nb": {
     "welcome": "Velkommen!",
@@ -69,7 +72,8 @@
     "bird-coherence-label": "Sammenheng",
     "bird-separation-label": "Atskillelse",
     "bird-alignment-label": "Justering",
-    "bird-eyesight-label": "Siktavstand"
+    "bird-eyesight-label": "Siktavstand",
+    "bird-3d-label": "3D Himmel"
   },
   "Tp": {
     "welcome": "Kama Pona!",
@@ -87,6 +91,7 @@
     "bird-coherence-label": "Kama Kulupu",
     "bird-separation-label": "Weka Insi",
     "bird-alignment-label": "Nasin Kulupu",
-    "bird-eyesight-label": "Mute Linja Lukin"
+    "bird-eyesight-label": "Mute Linja Lukin",
+    "bird-3d-label": "Sewi Pi Nasin Tu Wan"
   }
 }
