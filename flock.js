@@ -24,8 +24,8 @@ let previous_time;
 let flock_depth = 3000;
 let distance_to_camera = -flock_depth;
 const scale = 1.5;
-const field_of_view_horizontal = Math.PI/8;
-const field_of_view_vertical = Math.PI/8;
+let field_of_view_horizontal = Math.PI/8;
+let field_of_view_vertical = Math.PI/8;
 let birds_3d = true;
 
 
@@ -41,6 +41,8 @@ function render() {
         });
     flock_canvas_width = flock_canvas.width;
     flock_canvas_height = flock_canvas.height;
+    field_of_view_horizontal = 2*Math.atan(flock_canvas_width/(2*distance_to_camera));
+    field_of_view_vertical = 2*Math.atan(flock_canvas_height/(2*distance_to_camera));
 }
 
 function add_bird(x = Math.random()*flock_canvas.width, y=Math.random()*flock_canvas.height, z= Math.random()*flock_depth){
