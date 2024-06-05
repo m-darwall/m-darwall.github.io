@@ -10,6 +10,16 @@
     <body>
         <div class="circle" id="lang-button" onclick="change_language()">En</div>
         <div class="circle" id="options-button" onclick="toggle_options()">⚙️</div>
+        <div id="nav-dots">
+            <span id="Welcome-dot" class="dot active"></span>
+            <br/>
+            <span id="Birds-dot" class="dot"></span>
+            <br/>
+            <span id="Page3-dot" class="dot"></span>
+            <br/>
+            <span id="Page4-dot" class="dot"></span>
+        </div>
+
         <div id="nodes" class="section">
             <h1 id="welcome">Welcome.</h1>
     	    <canvas class="canvas" id="node-canvas"></canvas>
@@ -48,9 +58,11 @@
         </div>
         <div id="section-3" class="section">
             <p  id="page-3-message">This page is under construction.</p>
+            <canvas class="canvas" id="canvas3"></canvas>
         </div>
         <div id="section-4" class="section">
             <p  id="page-4-message">But I hope you enjoy it.</p>
+            <canvas class="canvas" id="canvas4"></canvas>
         </div>
 
     </body>
@@ -96,12 +108,26 @@
 
         // Function to start the animation loop for a canvas
         function startAnimation(check_canvas) {
+            let active = document.getElementsByClassName("active");
+            while(active.length){
+                active[0].className = "dot"
+            }
             if (check_canvas.id==="node-canvas"){
                 stop_birds();
                 start_nodes();
+                document.getElementById("Welcome-dot").className = "dot active";
             }else if (check_canvas.id==="flock-canvas"){
-                stop_nodes()
-                start_birds()
+                stop_nodes();
+                start_birds();
+                document.getElementById("Birds-dot").className = "dot active";
+            }else if (check_canvas.id==="canvas3"){
+                stop_nodes();
+                start_birds();
+                document.getElementById("Page3-dot").className = "dot active";
+            }else if (check_canvas.id==="canvas4"){
+                stop_nodes();
+                start_birds();
+                document.getElementById("Page4-dot").className = "dot active";
             }
         }
 
