@@ -1,6 +1,6 @@
 <h1>A website</h1>
 
-[This](https://m-darwall.github.io) is a site I'm using to experiment with HTML, CSS and JavaScript.\\
+[This](https://m-darwall.github.io) is a site I'm using to experiment with HTML, CSS and JavaScript.\
 It contains some interactive models that I made and think are pretty neat.
 
 <h2>Preview</h2>
