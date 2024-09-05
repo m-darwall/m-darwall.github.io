@@ -67,8 +67,11 @@
 
     </body>
     <script src="nodes.js"></script>
-    <script type="text/javascript"  src="https://cdn.jsdelivr.net/gh/m-darwall/boids@latest/flock.js"></script>
+    <script type="text/javascript"  src="https://cdn.jsdelivr.net/gh/m-darwall/boids@7b496c5fba767e30d1137942b8c1ea6a9ed390e7/flock.js"></script>
     <script>
+        let flock = new Flock("flock-canvas");
+
+
         //get translations from file
         async function fetchTranslations() {
             try {
@@ -113,12 +116,12 @@
                 active[0].className = "dot"
             }
             if (check_canvas.id==="node-canvas"){
-                stop_birds();
+                flock.stop_birds();
                 start_nodes();
                 document.getElementById("Welcome-dot").className = "dot active";
             }else if (check_canvas.id==="flock-canvas"){
                 stop_nodes();
-                start_birds();
+                flock.start_birds();
                 document.getElementById("Birds-dot").className = "dot active";
             }else if (check_canvas.id==="canvas3"){
                 stop_nodes();
@@ -157,6 +160,46 @@
         // Target canvases and observe them
         const canvases = document.querySelectorAll('.canvas');
         canvases.forEach(check_canvas => observer.observe(check_canvas));
+
+
+
+        ////////////////////////
+        // Flock Interactivity //
+        ////////////////////////
+
+        // adjust number of birds when slider is adjusted
+        document.getElementById("bird-count").onchange = function (){
+            let bird_count = parseInt(document.getElementById("bird-count").value);
+            flock.set_bird_number(bird_count);
+        }
+
+        // adjust maximum bird speed when slider is adjusted
+        let bird_speed_slider = document.getElementById("bird-speed");
+        bird_speed_slider.onchange = function (){
+            flock.set_max_speed(bird_speed_slider.value)
+        }
+
+        // update coherence when slider is adjusted
+        let bird_coherence_slider = document.getElementById("bird-coherence");
+        bird_coherence_slider.onchange = function(){flock.coherence=bird_coherence_slider.value*(1.0/1000);};
+        // update separation when slider is adjusted
+        let bird_separation_slider = document.getElementById("bird-separation");
+        bird_separation_slider.onchange = function(){flock.separation=bird_separation_slider.value*(1.0/1000);};
+        // update alignment when slider is adjusted
+        let bird_alignment_slider = document.getElementById("bird-alignment");
+        bird_alignment_slider.onchange = function(){flock.alignment=bird_alignment_slider.value*(1.0/1000);};
+        // update view range when slider is adjusted
+        let bird_eyesight_slider = document.getElementById("bird-eyesight");
+        bird_eyesight_slider.onchange = function(){this.view_range=bird_eyesight_slider.value;};
+        // update dimensions when checkbox checked/unchecked
+        let bird_3d_checkbox = document.getElementById("bird-3d");
+        bird_3d_checkbox.onchange = function(){
+            if(!bird_3d_checkbox.checked){
+                flock.go_2d()
+            }else{
+                flock.go_3d()
+            }
+        };
 
     </script>
 </html>
