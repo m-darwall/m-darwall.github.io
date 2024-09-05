@@ -117,19 +117,21 @@
             }
             if (check_canvas.id==="node-canvas"){
                 flock.stop_birds();
+                document.getElementById("flock-options-container").style.visibility = "hidden";
                 start_nodes();
                 document.getElementById("Welcome-dot").className = "dot active";
             }else if (check_canvas.id==="flock-canvas"){
                 stop_nodes();
                 flock.start_birds();
+                document.getElementById("flock-options-container").style.visibility = "visible";
                 document.getElementById("Birds-dot").className = "dot active";
             }else if (check_canvas.id==="canvas3"){
                 stop_nodes();
-                start_birds();
+                flock.start_birds();
                 document.getElementById("Page3-dot").className = "dot active";
             }else if (check_canvas.id==="canvas4"){
                 stop_nodes();
-                start_birds();
+                flock.start_birds();
                 document.getElementById("Page4-dot").className = "dot active";
             }
         }

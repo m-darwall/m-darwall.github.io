@@ -21,7 +21,7 @@ body{
 
 #nav-dots{
     position: fixed;
-    z-index:4;
+    z-index:2;
     top: 25vh;
     height: 50vh;
     width: 10px;
@@ -110,7 +110,7 @@ p{
 
 #options-button{
     position: fixed;
-    z-index: 3;
+    z-index: 4;
     right: 0;
     bottom: 0;
 }
